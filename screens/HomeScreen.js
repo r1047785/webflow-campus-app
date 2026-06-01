@@ -90,11 +90,18 @@ export default function HomeScreen({ navigation }) {
   const [newsSearch, setNewsSearch] = useState("");
   const [productCategory, setProductCategory] = useState("Alle");
   const [newsCategory, setNewsCategory] = useState("Alle");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts();
-    fetchNews();
-    fetchCampuses();
+    async function fetchData() {
+      setIsLoading(true);
+      await fetchCampuses();
+      await fetchNews();
+      await fetchProducts();
+      setIsLoading(false);
+    }
+
+    fetchData();
   }, []);
 
 async function fetchProducts() {
@@ -262,6 +269,10 @@ async function fetchCampuses() {
         </View>
       </View>
 
+      {isLoading ? (
+        <Text style={styles.loadingText}>Gegevens laden...</Text>
+      ) : null}
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Campussen</Text>
         {campuses.map((campus) => (
@@ -401,5 +412,10 @@ const styles = StyleSheet.create({
   },
   row: {
     marginBottom: 8
+  },
+  loadingText: {
+    color: colors.primaryDark,
+    fontWeight: "900",
+    marginBottom: 20
   }
 });
