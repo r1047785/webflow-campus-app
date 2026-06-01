@@ -7,8 +7,12 @@ export default function BookGameScreen() {
   const [bookLane, setBookLane] = useState(1);
   const [bookTop, setBookTop] = useState(0);
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   const [misses, setMisses] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const level = Math.floor(score / 5) + 1;
+  const speed = Math.max(180, 450 - score * 15);
 
   useEffect(() => {
     if (!isPlaying) {
@@ -24,10 +28,10 @@ export default function BookGameScreen() {
 
         return currentTop + 20;
       });
-    }, 450);
+    }, speed);
 
     return () => clearInterval(timer);
-  }, [isPlaying, basketLane, bookLane]);
+  }, [isPlaying, basketLane, bookLane, speed]);
 
   function startGame() {
     setBasketLane(1);
@@ -40,7 +44,15 @@ export default function BookGameScreen() {
 
   function checkCatch() {
     if (bookLane === basketLane) {
-      setScore((currentScore) => currentScore + 1);
+      setScore((currentScore) => {
+        const newScore = currentScore + 1;
+
+        if (newScore > highScore) {
+          setHighScore(newScore);
+        }
+
+        return newScore;
+      });
     } else {
       setMisses((currentMisses) => {
         const newMisses = currentMisses + 1;
@@ -75,8 +87,10 @@ export default function BookGameScreen() {
 
       <View style={styles.scoreRow}>
         <Text style={styles.scoreText}>Score: {score}</Text>
+        <Text style={styles.scoreText}>Level: {level}</Text>
         <Text style={styles.scoreText}>Gemist: {misses}/3</Text>
       </View>
+      <Text style={styles.highScore}>Beste score: {highScore}</Text>
 
       <View style={styles.gameBox}>
         <View style={styles.laneRow}>
@@ -137,11 +151,16 @@ const styles = StyleSheet.create({
   scoreRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 14
+    marginBottom: 8
   },
   scoreText: {
     color: colors.ink,
     fontWeight: "900"
+  },
+  highScore: {
+    color: colors.primaryDark,
+    fontWeight: "900",
+    marginBottom: 14
   },
   gameBox: {
     height: 360,
