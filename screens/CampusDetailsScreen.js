@@ -3,13 +3,14 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
 export default function CampusDetailsScreen({ route }) {
-  const { campus } = route.params;
+  const campus = route.params;
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
       <Image source={{ uri: campus.image }} style={styles.image} />
       <Text style={styles.city}>{campus.city}</Text>
       <Text style={styles.title}>{campus.name}</Text>
+
       <View style={styles.badge}>
         <Text style={styles.badgeText}>{campus.focus}</Text>
       </View>
@@ -29,15 +30,15 @@ export default function CampusDetailsScreen({ route }) {
 
       {campus.quote ? (
         <View style={styles.quoteBox}>
-          <Text style={styles.quoteMark}>“</Text>
-          <Text style={styles.quoteText}>{campus.quote.replaceAll("\"", "")}</Text>
+          <Text style={styles.quoteMark}>"</Text>
+          <Text style={styles.quoteText}>{campus.quote.replace(/"/g, "")}</Text>
         </View>
       ) : null}
 
       {campus.address ? (
         <View style={styles.infoGrid}>
           <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>Adres</Text>
+            <Text style={styles.infoLabel}>Adres</Text>
             <Text style={styles.infoText}>{campus.address}</Text>
           </View>
         </View>

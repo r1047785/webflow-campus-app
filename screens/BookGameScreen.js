@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme/colors";
 
 export default function BookGameScreen() {
@@ -130,18 +130,18 @@ export default function BookGameScreen() {
       </View>
 
       <View style={styles.buttons}>
-        <Pressable style={styles.controlButton} onPress={moveLeft}>
+        <TouchableOpacity style={styles.controlButton} onPress={moveLeft}>
           <Text style={styles.buttonText}>Links</Text>
-        </Pressable>
-        <Pressable style={styles.startButton} onPress={startGame}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.startButton} onPress={startGame}>
           <Text style={styles.startText}>{isPlaying ? "Opnieuw" : "Start"}</Text>
-        </Pressable>
-        <Pressable style={styles.controlButton} onPress={pauseGame}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.controlButton} onPress={pauseGame}>
           <Text style={styles.buttonText}>{isPaused ? "Hervat" : "Pauze"}</Text>
-        </Pressable>
-        <Pressable style={styles.controlButton} onPress={moveRight}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.controlButton} onPress={moveRight}>
           <Text style={styles.buttonText}>Rechts</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       {!isPlaying && misses >= 3 ? (

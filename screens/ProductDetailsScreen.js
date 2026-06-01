@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme/colors";
 
 export default function ProductDetailsScreen({ route }) {
-  const { product } = route.params;
+  const product = route.params;
   const [amount, setAmount] = useState(1);
   const total = amount * product.price;
 
@@ -16,19 +16,19 @@ export default function ProductDetailsScreen({ route }) {
       <View style={styles.priceBox}>
         <Text style={styles.price}>EUR {product.price.toFixed(2)}</Text>
         <View style={styles.counter}>
-          <Pressable
+          <TouchableOpacity
             style={styles.counterButton}
             onPress={() => setAmount((current) => Math.max(1, current - 1))}
           >
             <Text style={styles.counterText}>-</Text>
-          </Pressable>
+          </TouchableOpacity>
           <Text style={styles.amount}>{amount}</Text>
-          <Pressable
+          <TouchableOpacity
             style={styles.counterButton}
             onPress={() => setAmount((current) => current + 1)}
           >
             <Text style={styles.counterText}>+</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.totalBox}>

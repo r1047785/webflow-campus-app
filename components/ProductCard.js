@@ -1,10 +1,10 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme/colors";
 
 export default function ProductCard({ product, onPress }) {
   return (
-    <Pressable onPress={onPress} style={styles.card}>
+    <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.accentBar} />
       <Image source={{ uri: product.image }} style={styles.image} />
       <View style={styles.content}>
@@ -12,7 +12,7 @@ export default function ProductCard({ product, onPress }) {
         <Text style={styles.title}>{product.name}</Text>
         <Text style={styles.price}>EUR {product.price.toFixed(2)}</Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

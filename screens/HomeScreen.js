@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View
 } from "react-native";
 import CampusCard from "../components/CampusCard";
@@ -277,12 +277,12 @@ async function fetchCampuses() {
       <View style={styles.gameSection}>
         <Text style={styles.gameTitle}>Mini game</Text>
         <Text style={styles.gameText}>Vang de vallende boeken en haal een zo hoog mogelijke score.</Text>
-        <Pressable
+        <TouchableOpacity
           style={styles.gameButton}
           onPress={() => navigation.navigate("BookGame")}
         >
           <Text style={styles.gameButtonText}>Speel boeken vangen</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
@@ -291,7 +291,7 @@ async function fetchCampuses() {
           <CampusCard
             key={campus.id}
             campus={campus}
-            onPress={() => navigation.navigate("CampusDetails", { campus })}
+            onPress={() => navigation.navigate("CampusDetails", campus)}
           />
         ))}
       </View>
@@ -321,7 +321,7 @@ async function fetchCampuses() {
           <NewsCard
             key={article.id}
             article={article}
-            onPress={() => navigation.navigate("NewsDetails", { article })}
+            onPress={() => navigation.navigate("NewsDetails", article)}
           />
         ))}
       </View>
@@ -348,7 +348,7 @@ async function fetchCampuses() {
           <ProductCard
             key={product.id}
             product={product}
-            onPress={() => navigation.navigate("ProductDetails", { product })}
+            onPress={() => navigation.navigate("ProductDetails", product)}
           />
         ))}
       </View>

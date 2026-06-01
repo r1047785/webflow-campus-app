@@ -1,10 +1,10 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme/colors";
 
 export default function NewsCard({ article, onPress }) {
   return (
-    <Pressable onPress={onPress} style={styles.card}>
+    <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.accentBar} />
       <Image source={{ uri: article.image }} style={styles.image} />
       <View style={styles.content}>
@@ -13,7 +13,7 @@ export default function NewsCard({ article, onPress }) {
         <Text style={styles.intro}>{article.intro}</Text>
         <Text style={styles.arrow}>-></Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

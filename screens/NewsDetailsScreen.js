@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text } from "react-native";
 import { colors } from "../theme/colors";
 
 export default function NewsDetailsScreen({ route }) {
-  const { article } = route.params;
+  const article = route.params;
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
