@@ -11,6 +11,7 @@ export default function BookGameScreen() {
   const [misses, setMisses] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [message, setMessage] = useState("Druk op start om te beginnen.");
 
   const level = Math.floor(score / 5) + 1;
   const speed = Math.max(180, 450 - score * 15);
@@ -42,6 +43,7 @@ export default function BookGameScreen() {
     setMisses(0);
     setIsPaused(false);
     setIsPlaying(true);
+    setMessage("Vang de boeken!");
   }
 
   function pauseGame() {
@@ -52,6 +54,7 @@ export default function BookGameScreen() {
 
   function checkCatch() {
     if (bookLane === basketLane) {
+      setMessage("Goed gevangen!");
       setScore((currentScore) => {
         const newScore = currentScore + 1;
 
@@ -62,11 +65,13 @@ export default function BookGameScreen() {
         return newScore;
       });
     } else {
+      setMessage("Gemist!");
       setMisses((currentMisses) => {
         const newMisses = currentMisses + 1;
 
         if (newMisses >= 3) {
           setIsPlaying(false);
+          setMessage("Game over!");
         }
 
         return newMisses;
@@ -99,6 +104,7 @@ export default function BookGameScreen() {
         <Text style={styles.scoreText}>Gemist: {misses}/3</Text>
       </View>
       <Text style={styles.highScore}>Beste score: {highScore}</Text>
+      <Text style={styles.message}>{message}</Text>
       {isPaused ? (
         <Text style={styles.pauseText}>Pauze</Text>
       ) : null}
@@ -174,7 +180,13 @@ const styles = StyleSheet.create({
   highScore: {
     color: colors.primaryDark,
     fontWeight: "900",
-    marginBottom: 14
+    marginBottom: 8
+  },
+  message: {
+    color: colors.ink,
+    fontWeight: "900",
+    textAlign: "center",
+    marginBottom: 12
   },
   pauseText: {
     color: colors.primaryDark,
