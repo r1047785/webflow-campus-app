@@ -91,6 +91,8 @@ export default function HomeScreen({ navigation }) {
   const [newsSearch, setNewsSearch] = useState("");
   const [productCategory, setProductCategory] = useState("Alle");
   const [newsCategory, setNewsCategory] = useState("Alle");
+  const [productSort, setProductSort] = useState("naam-az");
+  const [newsSort, setNewsSort] = useState("naam-az");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -248,6 +250,18 @@ async function fetchCampuses() {
   });
 
   const sortedProducts = filteredProducts.sort((a, b) => {
+    if (productSort === "prijs-hoog-laag") {
+      return b.price - a.price;
+    }
+
+    if (productSort === "prijs-laag-hoog") {
+      return a.price - b.price;
+    }
+
+    if (productSort === "naam-za") {
+      return b.name.localeCompare(a.name);
+    }
+
     return a.name.localeCompare(b.name);
   });
 
@@ -258,6 +272,10 @@ async function fetchCampuses() {
   });
 
   const sortedNews = filteredNews.sort((a, b) => {
+    if (newsSort === "naam-za") {
+      return b.title.localeCompare(a.title);
+    }
+
     return a.title.localeCompare(b.title);
   });
 
@@ -317,6 +335,19 @@ async function fetchCampuses() {
             />
           ))}
         </ScrollView>
+        <Text style={styles.sortTitle}>Sorteer op</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.row}>
+          <FilterChip
+            label="Naam A/Z"
+            active={newsSort === "naam-az"}
+            onPress={() => setNewsSort("naam-az")}
+          />
+          <FilterChip
+            label="Naam Z/A"
+            active={newsSort === "naam-za"}
+            onPress={() => setNewsSort("naam-za")}
+          />
+        </ScrollView>
         {sortedNews.map((article) => (
           <NewsCard
             key={article.id}
@@ -343,6 +374,29 @@ async function fetchCampuses() {
               onPress={() => setProductCategory(category)}
             />
           ))}
+        </ScrollView>
+        <Text style={styles.sortTitle}>Sorteer op</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.row}>
+          <FilterChip
+            label="Prijs laag/hoog"
+            active={productSort === "prijs-laag-hoog"}
+            onPress={() => setProductSort("prijs-laag-hoog")}
+          />
+          <FilterChip
+            label="Prijs hoog/laag"
+            active={productSort === "prijs-hoog-laag"}
+            onPress={() => setProductSort("prijs-hoog-laag")}
+          />
+          <FilterChip
+            label="Naam A/Z"
+            active={productSort === "naam-az"}
+            onPress={() => setProductSort("naam-az")}
+          />
+          <FilterChip
+            label="Naam Z/A"
+            active={productSort === "naam-za"}
+            onPress={() => setProductSort("naam-za")}
+          />
         </ScrollView>
         {sortedProducts.map((product) => (
           <ProductCard
@@ -424,6 +478,12 @@ const styles = StyleSheet.create({
   },
   row: {
     marginBottom: 8
+  },
+  sortTitle: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "900",
+    marginBottom: 7
   },
   loadingText: {
     color: colors.primaryDark,
