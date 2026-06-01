@@ -5,6 +5,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ProductDetailsScreen from "./screens/ProductDetailsScreen";
 import NewsDetailsScreen from "./screens/NewsDetailsScreen";
 import CampusDetailsScreen from "./screens/CampusDetailsScreen";
+import BookGameScreen from "./screens/BookGameScreen";
 import { colors } from "./theme/colors";
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +41,11 @@ export default function App() {
           name="CampusDetails"
           component={CampusDetailsScreen}
           options={{ title: "Campus" }}
+        />
+        <Stack.Screen
+          name="BookGame"
+          component={BookGameScreen}
+          options={{ title: "Mini game" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

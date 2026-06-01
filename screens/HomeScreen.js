@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -273,6 +274,17 @@ async function fetchCampuses() {
         <Text style={styles.loadingText}>Gegevens laden...</Text>
       ) : null}
 
+      <View style={styles.gameSection}>
+        <Text style={styles.gameTitle}>Mini game</Text>
+        <Text style={styles.gameText}>Vang de vallende boeken en haal een zo hoog mogelijke score.</Text>
+        <Pressable
+          style={styles.gameButton}
+          onPress={() => navigation.navigate("BookGame")}
+        >
+          <Text style={styles.gameButtonText}>Speel boeken vangen</Text>
+        </Pressable>
+      </View>
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Campussen</Text>
         {campuses.map((campus) => (
@@ -417,5 +429,35 @@ const styles = StyleSheet.create({
     color: colors.primaryDark,
     fontWeight: "900",
     marginBottom: 20
+  },
+  gameSection: {
+    backgroundColor: colors.soft,
+    borderLeftWidth: 8,
+    borderLeftColor: colors.primary,
+    borderRadius: 9,
+    padding: 16,
+    marginBottom: 34
+  },
+  gameTitle: {
+    color: colors.ink,
+    fontSize: 22,
+    fontWeight: "900",
+    marginBottom: 6
+  },
+  gameText: {
+    color: colors.muted,
+    lineHeight: 21,
+    marginBottom: 14
+  },
+  gameButton: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.primary,
+    borderRadius: 7,
+    paddingHorizontal: 16,
+    paddingVertical: 11
+  },
+  gameButtonText: {
+    color: "#fff",
+    fontWeight: "900"
   }
 });
