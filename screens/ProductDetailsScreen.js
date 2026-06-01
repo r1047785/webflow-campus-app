@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useCart } from "../CartContext";
 import { colors } from "../theme/colors";
 
 export default function ProductDetailsScreen({ route }) {
   const product = route.params;
   const [amount, setAmount] = useState(1);
+  const [message, setMessage] = useState("");
+  const { addToCart } = useCart();
   const total = amount * product.price;
+
+  function handleAddToCart() {
+    addToCart(product, amount);
+    setMessage("Product toegevoegd aan winkelmandje.");
+  }
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
@@ -35,6 +43,10 @@ export default function ProductDetailsScreen({ route }) {
         <Text style={styles.totalLabel}>Totaal</Text>
         <Text style={styles.total}>EUR {total.toFixed(2)}</Text>
       </View>
+      <TouchableOpacity style={styles.cartButton} onPress={handleAddToCart}>
+        <Text style={styles.cartButtonText}>In winkelmandje</Text>
+      </TouchableOpacity>
+      {message ? <Text style={styles.message}>{message}</Text> : null}
     </ScrollView>
   );
 }
@@ -129,5 +141,22 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "900"
+  },
+  cartButton: {
+    backgroundColor: colors.ink,
+    borderRadius: 9,
+    padding: 16,
+    marginTop: 14,
+    alignItems: "center"
+  },
+  cartButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "900"
+  },
+  message: {
+    color: colors.primaryDark,
+    fontWeight: "900",
+    marginTop: 12
   }
 });
