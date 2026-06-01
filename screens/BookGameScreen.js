@@ -10,12 +10,13 @@ export default function BookGameScreen() {
   const [highScore, setHighScore] = useState(0);
   const [misses, setMisses] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const level = Math.floor(score / 5) + 1;
   const speed = Math.max(180, 450 - score * 15);
 
   useEffect(() => {
-    if (!isPlaying) {
+    if (!isPlaying || isPaused) {
       return;
     }
 
@@ -31,7 +32,7 @@ export default function BookGameScreen() {
     }, speed);
 
     return () => clearInterval(timer);
-  }, [isPlaying, basketLane, bookLane, speed]);
+  }, [isPlaying, isPaused, basketLane, bookLane, speed]);
 
   function startGame() {
     setBasketLane(1);
@@ -39,7 +40,14 @@ export default function BookGameScreen() {
     setBookTop(0);
     setScore(0);
     setMisses(0);
+    setIsPaused(false);
     setIsPlaying(true);
+  }
+
+  function pauseGame() {
+    if (isPlaying) {
+      setIsPaused(!isPaused);
+    }
   }
 
   function checkCatch() {
@@ -91,6 +99,9 @@ export default function BookGameScreen() {
         <Text style={styles.scoreText}>Gemist: {misses}/3</Text>
       </View>
       <Text style={styles.highScore}>Beste score: {highScore}</Text>
+      {isPaused ? (
+        <Text style={styles.pauseText}>Pauze</Text>
+      ) : null}
 
       <View style={styles.gameBox}>
         <View style={styles.laneRow}>
@@ -118,6 +129,9 @@ export default function BookGameScreen() {
         </Pressable>
         <Pressable style={styles.startButton} onPress={startGame}>
           <Text style={styles.startText}>{isPlaying ? "Opnieuw" : "Start"}</Text>
+        </Pressable>
+        <Pressable style={styles.controlButton} onPress={pauseGame}>
+          <Text style={styles.buttonText}>{isPaused ? "Hervat" : "Pauze"}</Text>
         </Pressable>
         <Pressable style={styles.controlButton} onPress={moveRight}>
           <Text style={styles.buttonText}>Rechts</Text>
@@ -161,6 +175,13 @@ const styles = StyleSheet.create({
     color: colors.primaryDark,
     fontWeight: "900",
     marginBottom: 14
+  },
+  pauseText: {
+    color: colors.primaryDark,
+    fontSize: 20,
+    fontWeight: "900",
+    textAlign: "center",
+    marginBottom: 12
   },
   gameBox: {
     height: 360,
@@ -211,7 +232,8 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    flexWrap: "wrap",
+    justifyContent: "center"
   },
   controlButton: {
     backgroundColor: colors.surface,
@@ -219,13 +241,17 @@ const styles = StyleSheet.create({
     borderColor: colors.line,
     borderRadius: 7,
     paddingHorizontal: 18,
-    paddingVertical: 12
+    paddingVertical: 12,
+    marginHorizontal: 4,
+    marginBottom: 8
   },
   startButton: {
     backgroundColor: colors.primary,
     borderRadius: 7,
     paddingHorizontal: 24,
-    paddingVertical: 12
+    paddingVertical: 12,
+    marginHorizontal: 4,
+    marginBottom: 8
   },
   buttonText: {
     color: colors.ink,
